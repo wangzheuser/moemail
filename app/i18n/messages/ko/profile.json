@@ -119,7 +119,11 @@
     "save": "설정 저장",
     "saving": "저장 중...",
     "saveSuccess": "설정이 성공적으로 저장되었습니다",
-    "saveFailed": "설정 저장에 실패했습니다"
+    "saveFailed": "설정 저장에 실패했습니다",
+    "registration": {
+      "enable": "새 사용자 회원가입 허용",
+      "enableDescription": "비활성화하면 로그인 페이지에서 회원가입 탭을 숨기고 등록 API도 새 사용자를 거부합니다"
+    }
   },
   "promote": {
     "title": "역할 관리",

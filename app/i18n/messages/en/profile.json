@@ -119,7 +119,11 @@
     "save": "Save Configuration",
     "saving": "Saving...",
     "saveSuccess": "Configuration saved successfully",
-    "saveFailed": "Failed to save configuration"
+    "saveFailed": "Failed to save configuration",
+    "registration": {
+      "enable": "Allow new user registration",
+      "enableDescription": "When disabled, the login page hides sign-up and the registration API rejects new users"
+    }
   },
   "promote": {
     "title": "Role Management",

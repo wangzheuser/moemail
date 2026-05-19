@@ -2,11 +2,24 @@ import { NextResponse } from "next/server"
 import { register } from "@/lib/auth"
 import { authSchema, AuthSchema } from "@/lib/validation"
 import { verifyTurnstileToken } from "@/lib/turnstile"
+import { getRequestContext } from "@cloudflare/next-on-pages"
+import { getRegistrationEnabled } from "@/lib/registration"
 
 export const runtime = "edge"
 
 export async function POST(request: Request) {
   try {
+    const env = getRequestContext().env
+    const registrationEnabled = await getRegistrationEnabled(env.SITE_CONFIG)
+
+    // 注册关闭时直接拒绝请求，避免仅靠前端隐藏入口被绕过。
+    if (!registrationEnabled) {
+      return NextResponse.json(
+        { error: "注册已关闭" },
+        { status: 403 }
+      )
+    }
+
     const json = await request.json() as AuthSchema
     
     try {

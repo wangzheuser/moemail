@@ -119,7 +119,11 @@
     "save": "保存配置",
     "saving": "保存中...",
     "saveSuccess": "配置保存成功",
-    "saveFailed": "保存配置失败"
+    "saveFailed": "保存配置失败",
+    "registration": {
+      "enable": "允许新用户注册",
+      "enableDescription": "关闭后，登录页将隐藏注册入口，注册接口也会拒绝新用户注册"
+    }
   },
   "promote": {
     "title": "角色管理",
