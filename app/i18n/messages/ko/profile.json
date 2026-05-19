@@ -123,7 +123,12 @@
     "registration": {
       "enable": "새 사용자 회원가입 허용",
       "enableDescription": "비활성화하면 로그인 페이지에서 회원가입 탭을 숨기고 등록 API도 새 사용자를 거부합니다"
-    }
+    },
+    "syncCloudflareDomains": "Cloudflare에서 동기화",
+    "syncingCloudflareDomains": "동기화 중...",
+    "syncCloudflareDomainsSuccess": "Cloudflare 이메일 도메인을 동기화했습니다",
+    "syncCloudflareDomainsEmpty": "사용 가능한 Cloudflare 이메일 도메인이 없습니다",
+    "syncCloudflareDomainsFailed": "Cloudflare 이메일 도메인 동기화에 실패했습니다"
   },
   "promote": {
     "title": "역할 관리",

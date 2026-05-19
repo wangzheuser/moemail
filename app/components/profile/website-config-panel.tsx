@@ -2,14 +2,13 @@
 
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
-import { Settings } from "lucide-react"
+import { Eye, EyeOff, RefreshCw, Settings } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 import { useState, useEffect } from "react"
 import { Role, ROLES } from "@/lib/permissions"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Eye, EyeOff } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -18,6 +17,31 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { EMAIL_CONFIG } from "@/config"
+
+type CloudflareDomainsResponse = {
+  domains?: string[]
+  error?: string
+}
+
+/**
+ * 将逗号分隔的域名配置拆成规范列表。
+ */
+function parseDomainInput(value: string) {
+  return value
+    .split(",")
+    .map((domain) => domain.trim().toLowerCase())
+    .filter(Boolean)
+}
+
+/**
+ * 合并当前配置和 Cloudflare 返回结果，避免覆盖手动填写内容。
+ */
+function mergeDomains(currentValue: string, cloudflareDomains: string[]) {
+  return Array.from(new Set([
+    ...parseDomainInput(currentValue),
+    ...cloudflareDomains.map((domain) => domain.trim().toLowerCase()).filter(Boolean),
+  ])).join(", ")
+}
 
 export function WebsiteConfigPanel() {
   const t = useTranslations("profile.website")
@@ -32,6 +56,7 @@ export function WebsiteConfigPanel() {
   const [turnstileSecretKey, setTurnstileSecretKey] = useState("")
   const [showSecretKey, setShowSecretKey] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [syncingDomains, setSyncingDomains] = useState(false)
   const { toast } = useToast()
 
 
@@ -102,6 +127,45 @@ export function WebsiteConfigPanel() {
     }
   }
 
+  /**
+   * 从 Cloudflare 同步可用于收信的域名，只填入输入框，不自动保存配置。
+   */
+  const handleSyncCloudflareDomains = async () => {
+    setSyncingDomains(true)
+    try {
+      const res = await fetch("/api/config/cloudflare-domains")
+      const data = await res.json() as CloudflareDomainsResponse
+
+      if (!res.ok) {
+        throw new Error(data.error || t("syncCloudflareDomainsFailed"))
+      }
+
+      const domains = data.domains ?? []
+      if (domains.length === 0) {
+        toast({
+          title: t("syncCloudflareDomainsEmpty"),
+          description: t("syncCloudflareDomainsEmpty"),
+        })
+        return
+      }
+
+      // 同步结果先合并到表单，最终保存仍由管理员确认。
+      setEmailDomains(mergeDomains(emailDomains, domains))
+      toast({
+        title: t("syncCloudflareDomainsSuccess"),
+        description: t("syncCloudflareDomainsSuccess"),
+      })
+    } catch (error) {
+      toast({
+        title: t("syncCloudflareDomainsFailed"),
+        description: error instanceof Error ? error.message : t("syncCloudflareDomainsFailed"),
+        variant: "destructive",
+      })
+    } finally {
+      setSyncingDomains(false)
+    }
+  }
+
   return (
     <div className="bg-background rounded-lg border-2 border-primary/20 p-6">
       <div className="flex items-center gap-2 mb-6">
@@ -127,11 +191,24 @@ export function WebsiteConfigPanel() {
         <div className="flex items-center gap-4">
           <span className="text-sm">{t("emailDomains")}:</span>
           <div className="flex-1">
-            <Input 
-              value={emailDomains}
-              onChange={(e) => setEmailDomains(e.target.value)}
-              placeholder={t("emailDomainsPlaceholder")}
-            />
+            <div className="flex gap-2">
+              <Input 
+                value={emailDomains}
+                onChange={(e) => setEmailDomains(e.target.value)}
+                placeholder={t("emailDomainsPlaceholder")}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleSyncCloudflareDomains}
+                disabled={syncingDomains || loading}
+                className="shrink-0"
+              >
+                <RefreshCw className={`mr-2 h-4 w-4 ${syncingDomains ? "animate-spin" : ""}`} />
+                {syncingDomains ? t("syncingCloudflareDomains") : t("syncCloudflareDomains")}
+              </Button>
+            </div>
           </div>
         </div>
 

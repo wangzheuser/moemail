@@ -123,7 +123,12 @@
     "registration": {
       "enable": "允许新用户注册",
       "enableDescription": "关闭后，登录页将隐藏注册入口，注册接口也会拒绝新用户注册"
-    }
+    },
+    "syncCloudflareDomains": "从 Cloudflare 同步",
+    "syncingCloudflareDomains": "同步中...",
+    "syncCloudflareDomainsSuccess": "已同步 Cloudflare 邮箱域名",
+    "syncCloudflareDomainsEmpty": "未发现可用的 Cloudflare 邮箱域名",
+    "syncCloudflareDomainsFailed": "同步 Cloudflare 邮箱域名失败"
   },
   "promote": {
     "title": "角色管理",

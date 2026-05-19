@@ -123,7 +123,12 @@
     "registration": {
       "enable": "允許新使用者註冊",
       "enableDescription": "關閉後，登入頁會隱藏註冊入口，註冊介面也會拒絕新使用者註冊"
-    }
+    },
+    "syncCloudflareDomains": "從 Cloudflare 同步",
+    "syncingCloudflareDomains": "同步中...",
+    "syncCloudflareDomainsSuccess": "已同步 Cloudflare 郵箱網域",
+    "syncCloudflareDomainsEmpty": "未發現可用的 Cloudflare 郵箱網域",
+    "syncCloudflareDomainsFailed": "同步 Cloudflare 郵箱網域失敗"
   },
   "promote": {
     "title": "角色管理",

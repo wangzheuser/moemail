@@ -123,7 +123,12 @@
     "registration": {
       "enable": "新規ユーザー登録を許可",
       "enableDescription": "無効にするとログイン画面の登録入口を非表示にし、登録 API も新規登録を拒否します"
-    }
+    },
+    "syncCloudflareDomains": "Cloudflare から同期",
+    "syncingCloudflareDomains": "同期中...",
+    "syncCloudflareDomainsSuccess": "Cloudflare のメールドメインを同期しました",
+    "syncCloudflareDomainsEmpty": "利用可能な Cloudflare メールドメインが見つかりません",
+    "syncCloudflareDomainsFailed": "Cloudflare メールドメインの同期に失敗しました"
   },
   "promote": {
     "title": "ロール管理",

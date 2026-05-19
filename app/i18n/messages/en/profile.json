@@ -123,7 +123,12 @@
     "registration": {
       "enable": "Allow new user registration",
       "enableDescription": "When disabled, the login page hides sign-up and the registration API rejects new users"
-    }
+    },
+    "syncCloudflareDomains": "Sync from Cloudflare",
+    "syncingCloudflareDomains": "Syncing...",
+    "syncCloudflareDomainsSuccess": "Cloudflare email domains synced",
+    "syncCloudflareDomainsEmpty": "No available Cloudflare email domains found",
+    "syncCloudflareDomainsFailed": "Failed to sync Cloudflare email domains"
   },
   "promote": {
     "title": "Role Management",

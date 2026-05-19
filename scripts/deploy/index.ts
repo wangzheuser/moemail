@@ -279,6 +279,8 @@ const pushPagesSecret = () => {
 
   // 定义运行时所需的环境变量列表
   const runtimeEnvVars = [
+    'CLOUDFLARE_API_TOKEN',
+    'CLOUDFLARE_ACCOUNT_ID',
     'AUTH_GITHUB_ID', 
     'AUTH_GITHUB_SECRET', 
     'AUTH_GOOGLE_ID', 
